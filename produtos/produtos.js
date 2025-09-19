@@ -5,14 +5,14 @@ const produtos = [
     preco: 'R$ 179,99',
     precoAntigo: 'R$ 219,99',
     descricao: 'Camisa oficial do Timão, disponível em todos os tamanhos e modelos.',
-    imagem: 'assets/CORINTHIANS2025HOME1.jpg',
+    imagem: 'assets/CORINTHIANS2025HOME1.webp',
     tamanhos: ['P','M','G','GG'],
     estoque: 1,
     campeonato: 'brasileirao',
     imagens: [
-      '../assets/CORINTHIANS2025HOME1.jpg',
-      '../assets/CORINTHIANS2025HOME2.jpg',
-      '../assets/CORINTHIANS2025HOME3.jpg'
+      '../assets/CORINTHIANS2025HOME1.webp',
+      '../assets/CORINTHIANS2025HOME2.webp',
+      '../assets/CORINTHIANS2025HOME3.webp'
     ]
   },
   {
