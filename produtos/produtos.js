@@ -3,10 +3,12 @@ const produtos = [
     id: 1,
     nome: 'Camisa Corinthians 2025 Home',
     preco: 'R$ 179,99',
-    precoAntigo: 'R$ 219,99',
+    precoAntigo: 'R$ 199,99',
     descricao: 'Camisa oficial do Timão, disponível em todos os tamanhos e modelos.',
     imagem: 'assets/CORINTHIANS2025HOME1.webp',
     tamanhos: ['P','M','G','GG'],
+    patrocinios: ['Com patrocínio', 'Sem patrocínio'],
+    patches: ['Nenhum', 'Libertadores', 'Copa do Brasil'],
     estoque: 1,
     campeonato: 'brasileirao',
     imagens: [
@@ -19,10 +21,12 @@ const produtos = [
     id: 2,
     nome: 'Camisa São Paulo 2025 Home',
     preco: 'R$ 179,99',
-    precoAntigo: 'R$ 219,99',
+    precoAntigo: 'R$ 199,99',
     descricao: 'Camisa oficial do Tricolor Paulista, disponível em todos os tamanhos e modelos.',
     imagem: 'assets/SAOPAULO2025HOME1.jpg',
     tamanhos: ['P','M','G','GG'],
+    patrocinios: ['Com patrocínio', 'Sem patrocínio'],
+    patches: ['Nenhum', 'Libertadores', 'Copa do Brasil'],
     estoque: 1,
     campeonato: 'brasileirao',
     imagens: [
@@ -30,7 +34,25 @@ const produtos = [
       '../assets/SAOPAULO2025HOME2.jpg',
       '../assets/SAOPAULO2025HOME3.jpg'
     ]
-  }
+  },
+  {
+    id: 3,
+    nome: 'Camisa Barcelona 2024/25 Away',
+    preco: 'R$ 169,99',
+    precoAntigo: 'R$ 189,99',
+    descricao: 'Camisa oficial do Barcelona, disponível em todos os tamanhos e modelos.',
+    imagem: 'assets/BARCELONA2025AWAY1.jpg',
+    tamanhos: ['P','M','G','GG'],
+    patrocinios: ['Com patrocínio', 'Sem patrocínio'],
+    patches: ['Nenhum', 'Champions League', 'La Liga'],
+    estoque: 1,
+    campeonato: 'la liga',
+    imagens: [
+      '../assets/BARCELONA2025AWAY1.jpg',
+      '../assets/BARCELONA2025AWAY2.jpg',
+      '../assets/BARCELONA2025AWAY3.jpg'
+    ]
+  },
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -72,8 +94,25 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>Estoque disponível: <strong>${produto.estoque}</strong></p>
         </div>
 
+        <!-- Tamanhos como botões -->
         <label class="form-label">Escolha o tamanho:</label>
         <div id="tamanhos" class="d-flex gap-2 flex-wrap mb-3"></div>
+
+        <!-- Patrocínio -->
+        <div class="mb-3">
+          <label for="selectPatrocinio" class="form-label">Patrocínio:</label>
+          <select id="selectPatrocinio" class="form-select">
+            ${produto.patrocinios.map(p => `<option value="${p}">${p}</option>`).join('')}
+          </select>
+        </div>
+
+        <!-- Patch -->
+        <div class="mb-3">
+          <label for="selectPatch" class="form-label">Patch:</label>
+          <select id="selectPatch" class="form-select">
+            ${produto.patches.map(pt => `<option value="${pt}">${pt}</option>`).join('')}
+          </select>
+        </div>
 
         <button id="btnComprar" class="btn btn-success btn-comprar w-100">Comprar no WhatsApp</button>
       </div>
@@ -86,19 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.getElementById('nextImg');
   imgWrapper.addEventListener('mouseenter', ()=>{ prevBtn.style.opacity=1; nextBtn.style.opacity=1; });
   imgWrapper.addEventListener('mouseleave', ()=>{ prevBtn.style.opacity=0; nextBtn.style.opacity=0; });
-
-  // Tamanhos
-  const containerTamanhos = document.getElementById("tamanhos");
-  produto.tamanhos.forEach(tamanho => {
-    const btn = document.createElement("button");
-    btn.className = "btn btn-outline-primary";
-    btn.textContent = tamanho;
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("#tamanhos button").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    });
-    containerTamanhos.appendChild(btn);
-  });
 
   // Carrossel com fade
   let imgIndex = 0;
@@ -130,11 +156,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Tamanhos como botões
+  const containerTamanhos = document.getElementById("tamanhos");
+  let tamanhoSelecionado = null;
+  produto.tamanhos.forEach(tamanho => {
+    const btn = document.createElement("button");
+    btn.className = "btn btn-outline-primary";
+    btn.textContent = tamanho;
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#tamanhos button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      tamanhoSelecionado = tamanho;
+    });
+    containerTamanhos.appendChild(btn);
+  });
+
   // Comprar
   document.getElementById("btnComprar").addEventListener("click", ()=>{
-    const btnSelecionado = document.querySelector("#tamanhos button.active");
-    if(!btnSelecionado){ alert("Escolha um tamanho!"); return; }
-    const mensagem = `Quero comprar ${produto.nome} tamanho ${btnSelecionado.textContent}`;
+    const patrocinio = document.getElementById("selectPatrocinio").value;
+    const patch = document.getElementById("selectPatch").value;
+
+    if(!tamanhoSelecionado){ alert("Escolha um tamanho!"); return; }
+
+    const mensagem = `Quero comprar ${produto.nome} - Tamanho: ${tamanhoSelecionado}, Patrocínio: ${patrocinio}, Patch: ${patch}`;
     window.open(`https://wa.me/5519984519925?text=${encodeURIComponent(mensagem)}`, "_blank");
   });
 });

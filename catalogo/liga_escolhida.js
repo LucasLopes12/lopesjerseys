@@ -27,10 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     card.innerHTML = `
       <div class="card h-100 shadow-sm">
-        <img src="${prod.imagens[0]}" class="card-img-top" alt="${prod.nome}">
+        <a href="../produtos/produto.html?id=${prod.id}">
+          <img src="${prod.imagens[0]}" class="card-img-top" alt="${prod.nome}">
+        </a>
         <div class="card-body text-center">
           <h5 class="card-title">${prod.nome}</h5>
-          <p class="card-text">${prod.descricao}</p>
+          <p class="descricao card-text">${prod.descricao}</p>
           <p class="fw-bold text-success">${prod.preco}</p>
           <a href="../produtos/produto.html?id=${prod.id}" class="btn btn-primary">Ver Mais</a>
         </div>
