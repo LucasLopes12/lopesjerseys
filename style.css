@@ -1,0 +1,51 @@
+body {
+  padding-top: 80px;
+}
+@media (max-width: 768px) {
+  #produtos .col-md-4 {
+    flex: 0 0 40%;
+    max-width: 40%;
+    margin: 0 auto 20px;
+  }
+  .card-img-top {
+    height: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  #painelCarousel {
+    display: none;
+  }
+  .descricao {
+    display: none;
+  }
+}
+
+.navbar-brand img {
+  height: 70px;
+  width: auto;
+}
+.banner-principal {
+  width: 100%;
+  height: 70vh; /* ocupa 70% da altura da tela, ajusta conforme quiser */
+  background-image: url('../assets/LJERSEYSPAINEL.png');
+  background-size: cover; /* garante que a imagem preencha todo o espaço */
+  background-position: center; /* centraliza a imagem */
+  background-repeat: no-repeat;
+  border-radius: 0; /* remove arredondamento se quiser que fique completa */
+}
+.carousel-inner img {
+  width: calc(100% - 40px); /* 20px de cada lado */
+  height: calc(70vh - 40px); /* altura reduzida em 20px */
+  object-fit: cover;
+  margin: 5px auto 40px; /* já tem margem embaixo */
+  border-radius: 10px; /* opcional */
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1030; /* pra ficar acima de outros elementos */
+}
