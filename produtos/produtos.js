@@ -1,60 +1,3 @@
-const produtos = [
-  {
-    id: 1,
-    nome: 'Camisa Corinthians 2025 Home',
-    preco: 'R$ 179,99',
-    precoAntigo: 'R$ 199,99',
-    descricao: 'Camisa oficial do Timão, disponível em todos os tamanhos e modelos.',
-    imagem: 'assets/CORINTHIANS2025HOME1.webp',
-    tamanhos: ['P','M','G','GG'],
-    patrocinios: ['Com patrocínio', 'Sem patrocínio'],
-    patches: ['Nenhum', 'Libertadores', 'Copa do Brasil'],
-    estoque: 1,
-    campeonato: 'brasileirao',
-    imagens: [
-      '../assets/CORINTHIANS2025HOME1.webp',
-      '../assets/CORINTHIANS2025HOME2.webp',
-      '../assets/CORINTHIANS2025HOME3.webp'
-    ]
-  },
-  {
-    id: 2,
-    nome: 'Camisa São Paulo 2025 Home',
-    preco: 'R$ 179,99',
-    precoAntigo: 'R$ 199,99',
-    descricao: 'Camisa oficial do Tricolor Paulista, disponível em todos os tamanhos e modelos.',
-    imagem: 'assets/SAOPAULO2025HOME1.jpg',
-    tamanhos: ['P','M','G','GG'],
-    patrocinios: ['Com patrocínio', 'Sem patrocínio'],
-    patches: ['Nenhum', 'Libertadores', 'Copa do Brasil'],
-    estoque: 1,
-    campeonato: 'brasileirao',
-    imagens: [
-      '../assets/SAOPAULO2025HOME1.jpg',
-      '../assets/SAOPAULO2025HOME2.jpg',
-      '../assets/SAOPAULO2025HOME3.jpg'
-    ]
-  },
-  {
-    id: 3,
-    nome: 'Camisa Barcelona 2024/25 Away',
-    preco: 'R$ 169,99',
-    precoAntigo: 'R$ 189,99',
-    descricao: 'Camisa oficial do Barcelona, disponível em todos os tamanhos e modelos.',
-    imagem: 'assets/BARCELONA2025AWAY1.jpg',
-    tamanhos: ['P','M','G','GG'],
-    patrocinios: ['Com patrocínio', 'Sem patrocínio'],
-    patches: ['Nenhum', 'Champions League', 'La Liga'],
-    estoque: 1,
-    campeonato: 'la liga',
-    imagens: [
-      '../assets/BARCELONA2025AWAY1.jpg',
-      '../assets/BARCELONA2025AWAY2.jpg',
-      '../assets/BARCELONA2025AWAY3.jpg'
-    ]
-  },
-];
-
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
@@ -69,6 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let miniaturasHTML = produto.imagens.map((img, i) =>
     `<img src="${img}" class="mini-img ${i===0?'active':''}" alt="Miniatura">`
   ).join('');
+
+  // Função para remover a primeira palavra do título
+  const removerPrimeiraPalavra = (nome) => {
+    const palavras = nome.split(" ");
+    palavras.shift(); // Remove a primeira palavra
+    return palavras.join(" ");
+  }
 
   // HTML do produto
   document.getElementById("produto").innerHTML = `
@@ -86,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
       <div class="col-md-6 detalhes-produto">
-        <h2>${produto.nome}</h2>
+        <h2 id="produtoNome">${produto.nome}</h2>
         <p>${produto.descricao}</p>
         <div class="mb-3">
           ${produto.precoAntigo ? `<p class="text-danger mb-1" style="font-size:1.5rem;"><s>${produto.precoAntigo}</s></p>` : ""}
@@ -118,6 +68,23 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </div>
   `;
+
+  // Função para adaptar o título para dispositivos móveis
+  const ajustarTituloParaMobile = () => {
+    const nomeProduto = document.getElementById("produtoNome");
+    if (window.innerWidth < 768) {
+      // Remover a primeira palavra do nome do produto
+      nomeProduto.textContent = removerPrimeiraPalavra(produto.nome);
+      nomeProduto.style.fontSize = "1.5rem"; // Tamanho menor para dispositivos móveis
+    } else {
+      nomeProduto.textContent = produto.nome; // Exibir o nome completo para telas maiores
+      nomeProduto.style.fontSize = "2.5rem"; // Tamanho padrão
+    }
+  }
+
+  // Chamar a função no carregamento e sempre que o tamanho da janela mudar
+  ajustarTituloParaMobile();
+  window.addEventListener('resize', ajustarTituloParaMobile);
 
   // Hover das setas
   const imgWrapper = document.querySelector('.img-wrapper');

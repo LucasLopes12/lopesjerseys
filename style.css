@@ -8,6 +8,20 @@ body {
     max-width: 40%;
     margin: 0 auto 20px;
   }
+  h2 {
+    font-size: 1.8rem; /* Reduz o tamanho da fonte */
+  }
+
+  /* Modificar o texto do nome do produto */
+  .nome-produto-mobile {
+    display: block; /* Para garantir que o nome completo seja exibido em telas pequenas */
+    font-size: 1.3rem;
+  }
+
+  /* Tamanho do botão para dispositivos móveis */
+  .btn-comprar {
+    font-size: 1rem;
+  }
   .card-img-top {
     height: auto;
     width: 100%;
